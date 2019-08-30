@@ -3,6 +3,7 @@ package Game;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -271,6 +272,7 @@ public class gameController {
 
 
 
+
     }
 
     @FXML
@@ -305,6 +307,7 @@ public class gameController {
                         GridPane.setRowIndex(pickedId, oldMouseClicked.getRowIndex());
                         previousRoundNumber = playerRoundCounter.getCountedObjects();
                         playerRoundCounter.setCountedObjects(previousRoundNumber+1);
+                        changeToQueen(pickedOld);
                         pickedId = null;
                         pickedOld = null;
 
@@ -317,6 +320,7 @@ public class gameController {
                                 checkForKill("black");
                                 killBlack(pickedOld);
                                 playerRoundCounter.setCountedObjects(previousRoundNumber + 1);
+                                changeToQueen(pickedOld);
                                 pickedId = null;
                                 pickedOld = null;
 
@@ -327,6 +331,7 @@ public class gameController {
                                 checkForKill("black");
                                 killBlack(pickedOld);
                                 playerRoundCounter.setCountedObjects(previousRoundNumber + 1);
+                                changeToQueen(pickedOld);
                                 pickedId = null;
                                 pickedOld = null;
 
@@ -337,6 +342,7 @@ public class gameController {
                                 checkForKill("black");
                                 killBlack(pickedOld);
                                 playerRoundCounter.setCountedObjects(previousRoundNumber + 1);
+                                changeToQueen(pickedOld);
                                 pickedId = null;
                                 pickedOld = null;
 
@@ -347,6 +353,7 @@ public class gameController {
                                 checkForKill("black");
                                 killBlack(pickedOld);
                                 playerRoundCounter.setCountedObjects(previousRoundNumber + 1);
+                                changeToQueen(pickedOld);
                                 pickedId = null;
                                 pickedOld = null;
 
@@ -385,6 +392,7 @@ public class gameController {
                         isBlackHaveKill(pickedBlack);
                         killWhite(pickedBlack);
                         previousRoundNumber = playerRoundCounter.getCountedObjects();
+                        changeToQueen(pickedBlack);
                         pickedBlack = null;
 
 
@@ -394,6 +402,7 @@ public class gameController {
                         isBlackHaveKill(pickedBlack);
                         killWhite(pickedBlack);
                         previousRoundNumber = playerRoundCounter.getCountedObjects();
+                        changeToQueen(pickedBlack);
                         pickedBlack = null;
 
 
@@ -405,6 +414,7 @@ public class gameController {
                         isBlackHaveKill(pickedBlack);
                         killWhite(pickedBlack);
                         previousRoundNumber = playerRoundCounter.getCountedObjects();
+                        changeToQueen(pickedBlack);
                         pickedBlack = null;
 
 
@@ -415,6 +425,7 @@ public class gameController {
                         isBlackHaveKill(pickedBlack);
                         killWhite(pickedBlack);
                         previousRoundNumber = playerRoundCounter.getCountedObjects();
+                        changeToQueen(pickedBlack);
                         pickedBlack = null;
 
 
@@ -532,6 +543,7 @@ public class gameController {
                 GridPane.setRowIndex(autoPickedNew, oldRow);
 
                 previousRoundNumber = playerRoundCounter.getCountedObjects();
+                changeToQueen(autoPickedOld);
                 break;
 
 
@@ -539,6 +551,7 @@ public class gameController {
             loopCounter++;
             if (loopCounter >1000){
                 System.out.println("Zostało zrobionych 1000 pętli !!" + loopCounter);
+                previousRoundNumber = playerRoundCounter.getCountedObjects();
                 break;
             }
 
@@ -586,19 +599,23 @@ public class gameController {
 
         if (picked.getId().contains(colorKilling)) {
             while (isKillFrontLeft || isKillFrontRight || isKillBackLeft || isKillBackRight) {
-                while (condition1) {
+                if (condition1) {
 
                     if (colorKilling.equals("white")) {
                         killingFrontRight(picked);
-                        checkForKill(colorToKill);
-                        if (isKillFrontRight) condition1 = true;
-                        else break;
+
+                        condition2 = false;
+                        condition3 = false;
+                        condition4 =false;
+
 
                     } else {
-                        isBlackHaveKill(picked);
                         killingBackLeft(picked);
-                        if (isKillBackLeft) condition1 = true;
-                        else break;
+
+                        condition2 = false;
+                        condition3 = false;
+                        condition4 =false;
+
                     }
                     System.out.println("pętla 1 !!!");
 
@@ -609,19 +626,21 @@ public class gameController {
                 }
 
 
-                while (condition2) {
+                if (condition2) {
 
                     if (colorKilling.equals("white")) {
                         killingFrontLeft(picked);
-                        checkForKill(colorToKill);
-                        if (isKillFrontLeft) condition2 = true;
-                        else break;
+
+                        condition3 = false;
+                        condition4 =false;
+
 
                     } else {
-                        isBlackHaveKill(picked);
                         killingBackRight(picked);
-                        if (isKillBackRight) condition2 = true;
-                        else break;
+
+                        condition3 = false;
+                        condition4 =false;
+
                     }
                     System.out.println("pętla 2 !!!");
 
@@ -631,20 +650,20 @@ public class gameController {
                 }
 
 
-                while (condition3) {
+                if (condition3) {
 
 
                     if (colorKilling.equals("white")) {
                         killingBackRight(picked);
-                        checkForKill(colorToKill);
-                        if (isKillBackRight) condition3 = true;
-                        else break;
+
+                        condition4 =false;
+
 
                     } else {
-                        isBlackHaveKill(picked);
                         killingFrontLeft(picked);
-                        if (isKillFrontLeft) condition3 = true;
-                        else break;
+
+                        condition4 =false;
+
                     }
                     System.out.println("pętla 3 !!!");
 
@@ -652,26 +671,35 @@ public class gameController {
 
                 }
 
-                while (condition4) {
+                if (condition4) {
 
                     if (colorKilling.equals("white")) {
                         killingBackLeft(picked);
-                        checkForKill(colorToKill);
-                        if (isKillBackLeft) condition4 = true;
-                        else break;
+
+
 
                     } else {
-                        isBlackHaveKill(picked);
                         killingFrontRight(picked);
-                        if (isKillFrontRight) condition4 = true;
-                        else break;
+
+
                     }
                     System.out.println("pętla 4 !!!");
                 }
                 if (picked.equals("white")) {
                     checkForKill(colorToKill);
+                    condition1 = isKillFrontRight;
+                    condition2 = isKillFrontLeft;
+                    condition3 = isKillBackRight;
+                    condition4 = isKillBackLeft;
                 }else {
                     isBlackHaveKill(picked);
+                    condition4 = isKillFrontRight;
+                    condition3 = isKillFrontLeft;
+                    condition2 = isKillBackRight;
+                    condition1 = isKillBackLeft;
+                }
+                if (!isKillFrontRight&&!isKillFrontLeft&&!isKillBackLeft&&!isKillBackRight){
+                    break;
                 }
 
             }
@@ -741,6 +769,7 @@ public class gameController {
         if (isKillBackLeft||isKillBackRight||isKillFrontLeft||isKillFrontRight){
             result = "tak";
             System.out.println("Znaleziono bicie : " + pickedBlack.getId());
+            System.out.println(isKillBackLeft + "" + isKillBackRight + "" + isKillFrontLeft + "" + isKillFrontRight);
         }else {
             result = "nie";
         }
@@ -752,14 +781,13 @@ public class gameController {
     public void killBlack(Node picked){
         checkForKill("black");
         autoMultipleKill("white", "black", picked);
-        pickedOld = null;
-        pickedId = null;
+
     }
-    public void killWhite(Node picked){
+    public void killWhite(Node picked) {
         isBlackHaveKill(picked);
         autoMultipleKill("black", "white", picked);
-        pickedBlack = null;
     }
+
 
     public void killingFrontRight(Node picked){
         try {
@@ -820,6 +848,24 @@ public class gameController {
             System.out.println("Nie da się bić w lewa tył");
         }
     }
+    public void changeToQueen(Node picked){
+        ImageView pickedToChange = (ImageView) picked;
+        if (pickedToChange.getId().contains("white")){
+            if (GridPane.getRowIndex(pickedToChange)==0){
+                Image whiteQueen = new Image("resources/fxml/game/biala_dama.png");
+                pickedToChange.setImage(whiteQueen);
+                pickedToChange.setId("whiteQueen"+pickedToChange.getId().substring(5));
+            }
+        }
+        if (pickedToChange.getId().contains("black")){
+            if (GridPane.getRowIndex(pickedToChange)==7){
+                Image blackQueen = new Image("resources/fxml/game/czarna_dama.png");
+                pickedToChange.setImage(blackQueen);
+                pickedToChange.setId("blackQueen"+pickedToChange.getId().substring(5));
+            }
+        }
+    }
+
 
 
 
