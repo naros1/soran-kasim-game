@@ -364,13 +364,16 @@ public class gameController {
                     }catch (Exception e2){
                         System.out.println("wykonałeś ruch!");
                     }
-
+                    try {
                         if (pickedOld.getId().contains("wqueen")) {
                             moveOrKillWhiteQueen(pickedOld, pickedId);
                             playerRoundCounter.setCountedObjects(previousRoundNumber + 1);
                             pickedId = null;
                             pickedOld = null;
                         }
+                    } catch (Exception e4){
+                        System.out.println("Nie wybrano damy!");
+                    }
 
 
 
@@ -879,86 +882,84 @@ public class gameController {
 
     public void moveOrKillWhiteQueen(Node pickedQueen, Node pickedField) {
         int loops;
-        if (GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen)<0) {
-            loops = Math.abs(GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen));
-        }else {
-            loops = Math.abs(GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen))+1;
-        }
+        int deltaRows;
+        int deltaColumns;
+        loops = Math.abs(GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen));
 
+        System.out.println("Liczba pętli do wykonania : "+ loops);
         if (Math.abs(GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen)) ==
                 Math.abs(GridPane.getColumnIndex(pickedField) - GridPane.getColumnIndex(pickedQueen))) {
+            System.out.println("Warunek pierwszy równosci ok !");
             for (int i = 0; i < loops; i++) {
-                if (GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen) > 0
-                        && GridPane.getColumnIndex(pickedField) - GridPane.getColumnIndex(pickedQueen) > 0) {
+                deltaColumns = GridPane.getColumnIndex(pickedField) - GridPane.getColumnIndex(pickedQueen);
+                deltaRows = GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen);
+                System.out.println("Delta rows : "+ deltaRows + "| Delta columns : "+deltaColumns );
+                if (deltaRows > 0
+                        && deltaColumns > 0) {
 
-
-                    if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("black")
-                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("bqueen"))
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 2, GridPane.getColumnIndex(pickedQueen) + 2, gridPane).getId().contains("free")) {
-                        killingBackRight(pickedQueen);
-                    }
-
-                    System.out.println("Niema bicia prawo tyl");
                     if (getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("free")) {
                         GridPane.setConstraints(getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane), GridPane.getColumnIndex(pickedQueen), GridPane.getRowIndex(pickedQueen));
                         GridPane.setConstraints(pickedQueen, GridPane.getColumnIndex(pickedQueen) + 1, GridPane.getRowIndex(pickedQueen) + 1);
+                        System.out.println("Ruch prawo tyl");
+                    }else if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("black")
+                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("bqueen"))
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 2, GridPane.getColumnIndex(pickedQueen) + 2, gridPane).getId().contains("free")) {
+                        killingBackRight(pickedQueen);
+                        i++;
+                        System.out.println("Bicie prawo tyl");
                     }
-
-
 
                 }
-                if (GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen) > 0
-                        && GridPane.getColumnIndex(pickedField) - GridPane.getColumnIndex(pickedQueen) < 0) {
+                if (deltaRows > 0
+                        && deltaColumns < 0) {
 
-
-                    if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("black")
-                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("bqueen"))
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 2, GridPane.getColumnIndex(pickedQueen) - 2, gridPane).getId().contains("free")) {
-                        killingBackLeft(pickedQueen);
-                    }
-
-                    System.out.println("Niema bicia lewo tyl");
                     if (getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("free")) {
                         GridPane.setConstraints(getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane), GridPane.getColumnIndex(pickedQueen), GridPane.getRowIndex(pickedQueen));
                         GridPane.setConstraints(pickedQueen, GridPane.getColumnIndex(pickedQueen) - 1, GridPane.getRowIndex(pickedQueen) + 1);
+                        System.out.println("Ruch lewo tyl");
+                    }else if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("black")
+                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("bqueen"))
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) + 2, GridPane.getColumnIndex(pickedQueen) - 2, gridPane).getId().contains("free")) {
+                        killingBackLeft(pickedQueen);
+                        i++;
+                        System.out.println("Bicie lewo tyl");
                     }
+
 
 
                 }
-                if (GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen) < 0
-                        && GridPane.getColumnIndex(pickedField) - GridPane.getColumnIndex(pickedQueen) < 0) {
+                if (deltaRows < 0
+                        && deltaColumns < 0) {
 
-
-                    if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("black")
-                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("bqueen"))
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 2, GridPane.getColumnIndex(pickedQueen) - 2, gridPane).getId().contains("free")) {
-                        killingFrontLeft(pickedQueen);
-                    }
-
-                    System.out.println("Niema bicia lewo przod");
                     if (getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("free")) {
                         GridPane.setConstraints(getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane), GridPane.getColumnIndex(pickedQueen), GridPane.getRowIndex(pickedQueen));
                         GridPane.setConstraints(pickedQueen, GridPane.getColumnIndex(pickedQueen) - 1, GridPane.getRowIndex(pickedQueen) - 1);
+                        System.out.println("Ruch lewo przod");
+                    }else if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("black")
+                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) - 1, gridPane).getId().contains("bqueen"))
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 2, GridPane.getColumnIndex(pickedQueen) - 2, gridPane).getId().contains("free")) {
+                        killingFrontLeft(pickedQueen);
+                        i++;
+                        System.out.println("Bicie lewo przod");
                     }
-
 
                 }
 
-                if (GridPane.getRowIndex(pickedField) - GridPane.getRowIndex(pickedQueen) < 0
-                        && GridPane.getColumnIndex(pickedField) - GridPane.getColumnIndex(pickedQueen) > 0) {
+                if (deltaRows < 0
+                        && deltaColumns > 0) {
 
-
-                    if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("black")
-                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("bqueen"))
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 2, GridPane.getColumnIndex(pickedQueen) + 2, gridPane).getId().contains("free")) {
-                        killingFrontRight(pickedQueen);
-                    }
-
-                    System.out.println("Niema bicia prawo przod");
                     if (getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("free")) {
                         GridPane.setConstraints(getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane), GridPane.getColumnIndex(pickedQueen), GridPane.getRowIndex(pickedQueen));
                         GridPane.setConstraints(pickedQueen, GridPane.getColumnIndex(pickedQueen) + 1, GridPane.getRowIndex(pickedQueen) - 1);
+                        System.out.println("Ruch prawo przod");
+                    }else if ((getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("black")
+                            || getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 1, GridPane.getColumnIndex(pickedQueen) + 1, gridPane).getId().contains("bqueen"))
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedQueen) - 2, GridPane.getColumnIndex(pickedQueen) + 2, gridPane).getId().contains("free")) {
+                        killingFrontRight(pickedQueen);
+                        i++;
+                        System.out.println("Bicie prawo przod");
                     }
+
 
 
                 }
