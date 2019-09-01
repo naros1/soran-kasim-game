@@ -78,8 +78,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game/gameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="553" column="77" selection-start-line="553" selection-start-column="77" selection-end-line="553" selection-end-column="77" />
+            <state relative-caret-position="129">
+              <caret line="881" column="82" selection-start-line="881" selection-start-column="82" selection-end-line="881" selection-end-column="82" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -103,7 +103,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26214">
+            <state relative-caret-position="26265">
               <caret line="1656" column="20" selection-start-line="1656" selection-start-column="20" selection-end-line="1656" selection-end-column="20" />
               <folding>
                 <element signature="e#66921#66922#0" expanded="true" />
@@ -221,6 +221,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -250,7 +251,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -376,12 +376,13 @@
       <workItem from="1567014924903" duration="1338000" />
       <workItem from="1567100567666" duration="9697000" />
       <workItem from="1567188612590" duration="335000" />
-      <workItem from="1567190948890" duration="9437000" />
+      <workItem from="1567190948890" duration="10103000" />
+      <workItem from="1567323049717" duration="14277000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="132165000" />
+    <option name="totallyTimeSpent" value="147108000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -396,7 +397,7 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1732224" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.17549168" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -488,6 +489,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Game/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/src.zip!/java/util/stream/ReferencePipeline.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5848">
@@ -501,7 +512,7 @@
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_211/javafx-src.zip!/javafx/fxml/FXMLLoader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26214">
+        <state relative-caret-position="26265">
           <caret line="1656" column="20" selection-start-line="1656" selection-start-column="20" selection-end-line="1656" selection-end-column="20" />
           <folding>
             <element signature="e#66921#66922#0" expanded="true" />
@@ -557,20 +568,10 @@
     <entry file="file://$PROJECT_DIR$/src/resources/fxml/game/plansza.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Game/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Game/gameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="553" column="77" selection-start-line="553" selection-start-column="77" selection-end-line="553" selection-end-column="77" />
+        <state relative-caret-position="129">
+          <caret line="881" column="82" selection-start-line="881" selection-start-column="82" selection-end-line="881" selection-end-column="82" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
