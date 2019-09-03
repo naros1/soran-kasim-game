@@ -993,6 +993,8 @@ public class gameController {
                 .forEach(blacksQueens::add);
 
         if (blacksQueens.size()>0){
+            Random randomArrayId = new Random();
+            System.out.println("Liczba dam w kolekcji : " + blacksQueens.size());
             while (i<blacksQueens.size()){
                 blackQueenAnalyzedKills=0;
                 blackQueenAnalyzed = blacksQueens.get(i);
@@ -1070,14 +1072,59 @@ public class gameController {
                     choosenQueenWithHighestKills.setDirectionToKill(directoinAnalyzedQueen);
                 }
 
-
+                System.out.println("Wykonano petle losowania Queen numar : "+i);
                 i++;
+
+            }
+            if(blackQueenHighestKills == 0){
+                if (blacksQueens.size()==1){
+                    choosenQueenWithHighestKills.setQueen(blacksQueens.get(0));
+                    choosenQueenWithHighestKills.setDirectionToKill("brak");
+                }else {
+                    choosenQueenWithHighestKills.setQueen(blacksQueens.get(randomArrayId.nextInt(blacksQueens.size())));
+                    choosenQueenWithHighestKills.setDirectionToKill("brak");
+                }
             }
         }
         return choosenQueenWithHighestKills;
     }
-    public void randomMoveQueen(QueenWithHighestKills queenForwarded){
-        Node queen = queenForwarded.getQueen();
+    public void randomMoveorKillQueen(GridPane gridPaneLoaded){
+        QueenWithHighestKills queen = chooseRandomBlackQueen(gridPaneLoaded);
+        Node analyzedFieldLeftFront;
+        Node analyzedFieldRightFront;
+        Node analyzedFieldLeftBack;
+        Node analyzedFieldRightBack;
+        int blackQueenAnalyzedRow;
+        int blackQueenAnalyzedColumn;
+        int newRow;
+        int newColumn;
+        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
+        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+        analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
+        Random randomDirection = new Random();
+        int direciton;
+
+        if (queen.getDirectionToKill().equals("brak")){
+            direciton=randomDirection.nextInt(4);
+            if (direciton == 0){
+                while (analyzedFieldLeftBack.getId().contains("free")||analyzedFieldLeftBack.getId().contains("b")){
+                    if (analyzedFieldLeftBack.getId().contains("b")
+                            || getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+1,GridPane.getColumnIndex(analyzedFieldLeftBack)-1, gridPaneLoaded).getId().contains("w")){
+                        break;
+                    }else {
+                        newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
+                        newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
+                        GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                        GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                    }
+                }
+            }
+
+        }
+
     }
 
 
