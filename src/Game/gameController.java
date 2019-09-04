@@ -397,7 +397,7 @@ public class gameController {
 
         if (playerRoundCounter.getCountedObjects().equals(previousRoundNumber+1)) {
             if (playerRoundCounter.getCountedObjects() % 2 == 1) {
-                    System.out.println("Wybran dame : "+ chooseRandomBlackQueen(gridPane).getDirectionToKill());
+                randomMoveOrKillQueen(gridPane);
                     noBlackQueen = true;
 
             }
@@ -1120,106 +1120,63 @@ public class gameController {
         System.out.println("Wybrano dame : " + choosenQueenWithHighestKills.getQueen() + "| Kierunek : " + choosenQueenWithHighestKills.getDirectionToKill());
         return choosenQueenWithHighestKills;
     }
-    public void randomMoveorKillQueen(GridPane gridPaneLoaded){
+    public void randomMoveOrKillQueen(GridPane gridPaneLoaded){
         QueenWithHighestKills queen = chooseRandomBlackQueen(gridPaneLoaded);
-        Node analyzedFieldLeftFront;
-        Node analyzedFieldRightFront;
-        Node analyzedFieldLeftBack;
-        Node analyzedFieldRightBack;
-        int blackQueenAnalyzedRow;
-        int blackQueenAnalyzedColumn;
-        int newRow;
-        int newColumn;
-        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
-        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
-        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
-        analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
-        Random randomDirection = new Random();
-        int direciton;
-        List<Integer> possibleDirections = new ArrayList<>();
+        if (queen.getQueen()!=null) {
+            Node analyzedFieldLeftFront;
+            Node analyzedFieldRightFront;
+            Node analyzedFieldLeftBack;
+            Node analyzedFieldRightBack;
+            int blackQueenAnalyzedRow;
+            int blackQueenAnalyzedColumn;
+            int newRow;
+            int newColumn;
+            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+            analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+            analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+            analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+            analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+            Random randomDirection = new Random();
+            int direciton;
+            List<Integer> possibleDirections = new ArrayList<>();
 
-        if (queen.getDirectionToKill().equals("brak")){
-            if (analyzedFieldLeftBack.getId().contains("free")){
-                possibleDirections.add(0);
-            }
-            if (analyzedFieldRightBack.getId().contains("free")){
-                possibleDirections.add(1);
-            }
-            if (analyzedFieldLeftFront.getId().contains("free")){
-                possibleDirections.add(2);
-            }
-            if (analyzedFieldRightFront.getId().contains("free")){
-                possibleDirections.add(3);
-            }
-            if (possibleDirections.size()>1) {
-                direciton = possibleDirections.get(randomDirection.nextInt(possibleDirections.size()));
-            }else {
-                direciton=possibleDirections.get(0);
-            }
+            if (queen.getDirectionToKill().equals("brak")) {
+                try {
+                    if (analyzedFieldLeftBack.getId().contains("free")) {
+                        possibleDirections.add(0);
+                    }
+                } catch (Exception e1) {
+                }
+                try {
+                    if (analyzedFieldRightBack.getId().contains("free")) {
+                        possibleDirections.add(1);
+                    }
+                } catch (Exception e2) {
+                }
+                try {
+                    if (analyzedFieldLeftFront.getId().contains("free")) {
+                        possibleDirections.add(2);
+                    }
+                } catch (Exception e3) {
+                }
+                try {
+                    if (analyzedFieldRightFront.getId().contains("free")) {
+                        possibleDirections.add(3);
+                    }
+                } catch (Exception e4) {
+                }
+                if (possibleDirections.size() > 1) {
+                    direciton = possibleDirections.get(randomDirection.nextInt(possibleDirections.size()));
+                } else {
+                    direciton = possibleDirections.get(0);
+                }
 
-            if (direciton == 0) {
-                while (analyzedFieldLeftBack.getId().contains("free")) {
-                    if (!analyzedFieldLeftBack.getId().contains("free")){
-                        break;
-                    }
-                    newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
-                    newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
-                    GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
-                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
-                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                    analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
-                }
-            }
-            if (direciton == 1) {
-                while (analyzedFieldRightBack.getId().contains("free")) {
-                    if (!analyzedFieldRightBack.getId().contains("free")){
-                        break;
-                    }
-                    newColumn = GridPane.getColumnIndex(analyzedFieldRightBack);
-                    newRow = GridPane.getRowIndex(analyzedFieldRightBack);
-                    GridPane.setConstraints(analyzedFieldRightBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
-                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
-                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                    analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
-                }
-            }
-            if (direciton == 2) {
-                while (analyzedFieldLeftFront.getId().contains("free")) {
-                    if (!analyzedFieldLeftFront.getId().contains("free")){
-                        break;
-                    }
-                    newColumn = GridPane.getColumnIndex(analyzedFieldLeftFront);
-                    newRow = GridPane.getRowIndex(analyzedFieldLeftFront);
-                    GridPane.setConstraints(analyzedFieldLeftFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
-                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
-                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                    analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
-                }
-            }
-            if (direciton == 3) {
-                while (analyzedFieldRightFront.getId().contains("free")) {
-                    if (!analyzedFieldRightFront.getId().contains("free")){
-                        break;
-                    }
-                    newColumn = GridPane.getColumnIndex(analyzedFieldRightFront);
-                    newRow = GridPane.getRowIndex(analyzedFieldRightFront);
-                    GridPane.setConstraints(analyzedFieldRightFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
-                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
-                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                    analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
-                }
-            }
-
-        }else{
-            if (queen.getDirectionToKill().equals("lb")){
-                while (analyzedFieldLeftBack.getId().contains("free")||analyzedFieldLeftBack.getId().contains("w")){
-                    if (analyzedFieldLeftBack.getId().contains("free")){
+                if (direciton == 0) {
+                    while (analyzedFieldLeftBack.getId().contains("free")) {
+                        if (!analyzedFieldLeftBack.getId().contains("free")) {
+                            break;
+                        }
                         newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
                         newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
                         GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
@@ -1227,80 +1184,137 @@ public class gameController {
                         blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
                         blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
                         analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
-                    }else if (analyzedFieldLeftBack.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+1,GridPane.getColumnIndex(analyzedFieldLeftBack)-1,gridPaneLoaded).getId().contains("free")){
-                        killingBackLeft(queen.getQueen());
-                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
-                    }else {
-                        break;
                     }
                 }
-            }
-            if (queen.getDirectionToKill().equals("rb")){
-                while (analyzedFieldRightBack.getId().contains("free")||analyzedFieldRightBack.getId().contains("w")){
-                    if (analyzedFieldRightBack.getId().contains("free")){
+                if (direciton == 1) {
+                    while (analyzedFieldRightBack.getId().contains("free")) {
+                        if (!analyzedFieldRightBack.getId().contains("free")) {
+                            break;
+                        }
                         newColumn = GridPane.getColumnIndex(analyzedFieldRightBack);
                         newRow = GridPane.getRowIndex(analyzedFieldRightBack);
                         GridPane.setConstraints(analyzedFieldRightBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
                         GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
                         blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
                         blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
-                    }else if (analyzedFieldRightBack.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack)+1,GridPane.getColumnIndex(analyzedFieldRightBack)+1,gridPaneLoaded).getId().contains("free")){
-                        killingBackRight(queen.getQueen());
-                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
-                    }else {
-                        break;
+                        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
                     }
                 }
-            }
-            if (queen.getDirectionToKill().equals("lf")){
-                while (analyzedFieldLeftFront.getId().contains("free")||analyzedFieldLeftFront.getId().contains("w")){
-                    if (analyzedFieldLeftFront.getId().contains("free")){
+                if (direciton == 2) {
+                    while (analyzedFieldLeftFront.getId().contains("free")) {
+                        if (!analyzedFieldLeftFront.getId().contains("free")) {
+                            break;
+                        }
                         newColumn = GridPane.getColumnIndex(analyzedFieldLeftFront);
                         newRow = GridPane.getRowIndex(analyzedFieldLeftFront);
                         GridPane.setConstraints(analyzedFieldLeftFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
                         GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
                         blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
                         blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
-
-                    }else if (analyzedFieldLeftFront.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront)-1,GridPane.getColumnIndex(analyzedFieldLeftFront)-1,gridPaneLoaded).getId().contains("free")){
-                        killingFrontLeft(queen.getQueen());
-                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
-                    }else {
-                        break;
+                        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
                     }
                 }
-            }
-            if (queen.getDirectionToKill().equals("rf")){
-                while (analyzedFieldRightFront.getId().contains("free")||analyzedFieldRightFront.getId().contains("w")){
-                    if (analyzedFieldRightFront.getId().contains("free")){
+                if (direciton == 3) {
+                    while (analyzedFieldRightFront.getId().contains("free")) {
+                        if (!analyzedFieldRightFront.getId().contains("free")) {
+                            break;
+                        }
                         newColumn = GridPane.getColumnIndex(analyzedFieldRightFront);
                         newRow = GridPane.getRowIndex(analyzedFieldRightFront);
                         GridPane.setConstraints(analyzedFieldRightFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
                         GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
                         blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
                         blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+                        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+                    }
+                }
 
-                    }else if (analyzedFieldRightFront.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront)-1,GridPane.getColumnIndex(analyzedFieldRightFront)+1,gridPaneLoaded).getId().contains("free")){
-                        killingFrontRight(queen.getQueen());
-                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
-                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
-                        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+            } else {
+                if (queen.getDirectionToKill().equals("lb")) {
+                    while (analyzedFieldLeftBack.getId().contains("free") || analyzedFieldLeftBack.getId().contains("w")) {
+                        if (analyzedFieldLeftBack.getId().contains("free")) {
+                            newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
+                            newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
+                            GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                            GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+                        } else if (analyzedFieldLeftBack.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack) + 1, GridPane.getColumnIndex(analyzedFieldLeftBack) - 1, gridPaneLoaded).getId().contains("free")) {
+                            killingBackLeft(queen.getQueen());
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (queen.getDirectionToKill().equals("rb")) {
+                    while (analyzedFieldRightBack.getId().contains("free") || analyzedFieldRightBack.getId().contains("w")) {
+                        if (analyzedFieldRightBack.getId().contains("free")) {
+                            newColumn = GridPane.getColumnIndex(analyzedFieldRightBack);
+                            newRow = GridPane.getRowIndex(analyzedFieldRightBack);
+                            GridPane.setConstraints(analyzedFieldRightBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                            GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+                        } else if (analyzedFieldRightBack.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack) + 1, GridPane.getColumnIndex(analyzedFieldRightBack) + 1, gridPaneLoaded).getId().contains("free")) {
+                            killingBackRight(queen.getQueen());
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (queen.getDirectionToKill().equals("lf")) {
+                    while (analyzedFieldLeftFront.getId().contains("free") || analyzedFieldLeftFront.getId().contains("w")) {
+                        if (analyzedFieldLeftFront.getId().contains("free")) {
+                            newColumn = GridPane.getColumnIndex(analyzedFieldLeftFront);
+                            newRow = GridPane.getRowIndex(analyzedFieldLeftFront);
+                            GridPane.setConstraints(analyzedFieldLeftFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                            GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
 
-                    }else {
-                        break;
+                        } else if (analyzedFieldLeftFront.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront) - 1, GridPane.getColumnIndex(analyzedFieldLeftFront) - 1, gridPaneLoaded).getId().contains("free")) {
+                            killingFrontLeft(queen.getQueen());
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (queen.getDirectionToKill().equals("rf")) {
+                    while (analyzedFieldRightFront.getId().contains("free") || analyzedFieldRightFront.getId().contains("w")) {
+                        if (analyzedFieldRightFront.getId().contains("free")) {
+                            newColumn = GridPane.getColumnIndex(analyzedFieldRightFront);
+                            newRow = GridPane.getRowIndex(analyzedFieldRightFront);
+                            GridPane.setConstraints(analyzedFieldRightFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                            GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+
+                        } else if (analyzedFieldRightFront.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront) - 1, GridPane.getColumnIndex(analyzedFieldRightFront) + 1, gridPaneLoaded).getId().contains("free")) {
+                            killingFrontRight(queen.getQueen());
+                            blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                            blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                            analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow - 1, blackQueenAnalyzedColumn + 1, gridPaneLoaded);
+
+                        } else {
+                            break;
+                        }
                     }
                 }
             }
