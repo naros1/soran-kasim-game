@@ -259,6 +259,7 @@ public class gameController {
     private boolean isKillFrontLeft;
     private boolean isKillBackRight;
     private boolean isKillBackLeft;
+    private boolean noBlackQueen;
 
 
 
@@ -395,59 +396,63 @@ public class gameController {
             }
 
         if (playerRoundCounter.getCountedObjects().equals(previousRoundNumber+1)) {
-            try {
-                pickedBlack = chooseRandomBlackKilling(gridPane);
-                if (pickedBlack != null) {
-                    isBlackHaveKill(pickedBlack);
-                    if (isKillBackLeft) {
-                        killingBackLeft(pickedBlack);
+            if (playerRoundCounter.getCountedObjects() % 2 == 1) {
+                    System.out.println("Wybran dame : "+ chooseRandomBlackQueen(gridPane).getDirectionToKill());
+                    noBlackQueen = true;
+
+            }
+            if (noBlackQueen) {
+                try {
+                    pickedBlack = chooseRandomBlackKilling(gridPane);
+                    if (pickedBlack != null) {
                         isBlackHaveKill(pickedBlack);
-                        killWhite(pickedBlack);
-                        previousRoundNumber = playerRoundCounter.getCountedObjects();
-                        changeToQueen(pickedBlack);
-                        pickedBlack = null;
+                        if (isKillBackLeft) {
+                            killingBackLeft(pickedBlack);
+                            isBlackHaveKill(pickedBlack);
+                            killWhite(pickedBlack);
+                            previousRoundNumber = playerRoundCounter.getCountedObjects();
+                            changeToQueen(pickedBlack);
+                            pickedBlack = null;
+
+
+                        }
+                        if (isKillBackRight) {
+                            killingBackRight(pickedBlack);
+                            isBlackHaveKill(pickedBlack);
+                            killWhite(pickedBlack);
+                            previousRoundNumber = playerRoundCounter.getCountedObjects();
+                            changeToQueen(pickedBlack);
+                            pickedBlack = null;
+
+
+                        }
+                        if (isKillFrontLeft) {
+                            killingFrontLeft(pickedBlack);
+                            isBlackHaveKill(pickedBlack);
+                            killWhite(pickedBlack);
+                            previousRoundNumber = playerRoundCounter.getCountedObjects();
+                            changeToQueen(pickedBlack);
+                            pickedBlack = null;
+
+
+                        }
+                        if (isKillFrontRight) {
+                            killingFrontRight(pickedBlack);
+                            isBlackHaveKill(pickedBlack);
+                            killWhite(pickedBlack);
+                            previousRoundNumber = playerRoundCounter.getCountedObjects();
+                            changeToQueen(pickedBlack);
+                            pickedBlack = null;
+
+
+                        }
 
 
                     }
-                    if (isKillBackRight) {
-                        killingBackRight(pickedBlack);
-                        isBlackHaveKill(pickedBlack);
-                        killWhite(pickedBlack);
-                        previousRoundNumber = playerRoundCounter.getCountedObjects();
-                        changeToQueen(pickedBlack);
-                        pickedBlack = null;
-
-
-
-
-                    }
-                    if (isKillFrontLeft) {
-                        killingFrontLeft(pickedBlack);
-                        isBlackHaveKill(pickedBlack);
-                        killWhite(pickedBlack);
-                        previousRoundNumber = playerRoundCounter.getCountedObjects();
-                        changeToQueen(pickedBlack);
-                        pickedBlack = null;
-
-
-
-                    }
-                    if (isKillFrontRight) {
-                        killingFrontRight(pickedBlack);
-                        isBlackHaveKill(pickedBlack);
-                        killWhite(pickedBlack);
-                        previousRoundNumber = playerRoundCounter.getCountedObjects();
-                        changeToQueen(pickedBlack);
-                        pickedBlack = null;
-
-
-                    }
-
-
+                } catch (Exception e3) {
+                    moveBlack(gridPane);
+                    System.out.println("runda czarnego");
                 }
-            }catch (Exception e3) {
-                moveBlack(gridPane);
-                System.out.println("runda czarnego");
             }
         }else {
             previousRoundNumber = playerRoundCounter.getCountedObjects();
@@ -1005,67 +1010,93 @@ public class gameController {
                 analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
                 analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
 
-                while(analyzedFieldLeftBack.getId()!=null && !analyzedFieldLeftBack.getId().contains("black") && !analyzedFieldLeftBack.getId().contains("bqueen")){
-                    if (analyzedFieldLeftBack.getId().contains("free")){
-                        analyzedFieldLeftBack= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+1,GridPane.getColumnIndex(analyzedFieldLeftBack)-1,gridPaneLoaded);
-                    }else if (analyzedFieldLeftBack.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+1,GridPane.getColumnIndex(analyzedFieldLeftBack)-1,gridPaneLoaded).getId().contains("free")){
-                        blackQueenAnalyzedKills=blackQueenAnalyzedKills+1;
-                        analyzedFieldLeftBack= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+2,GridPane.getColumnIndex(analyzedFieldLeftBack)-2,gridPaneLoaded);
-                    }else {
-                        break;
+                try {
+                    while (analyzedFieldLeftBack.getId() != null && !analyzedFieldLeftBack.getId().contains("black") && !analyzedFieldLeftBack.getId().contains("bqueen")) {
+                        if (analyzedFieldLeftBack.getId().contains("free")) {
+                            analyzedFieldLeftBack = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack) + 1, GridPane.getColumnIndex(analyzedFieldLeftBack) - 1, gridPaneLoaded);
+                        } else if (analyzedFieldLeftBack.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack) + 1, GridPane.getColumnIndex(analyzedFieldLeftBack) - 1, gridPaneLoaded).getId().contains("free")) {
+                            blackQueenAnalyzedKills = blackQueenAnalyzedKills + 1;
+                            analyzedFieldLeftBack = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack) + 2, GridPane.getColumnIndex(analyzedFieldLeftBack) - 2, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
                     }
+                } catch (Exception e1){
+                    System.out.println("Null dama left back!");
                 }
-                if (blackQueenAnalyzedKills>blackQueenKills){
-                    blackQueenKills=blackQueenAnalyzedKills;
-                    directoinAnalyzedQueen="lb";
+                if (blackQueenAnalyzedKills > blackQueenKills) {
+                    blackQueenKills = blackQueenAnalyzedKills;
+                    directoinAnalyzedQueen = "lb";
                 }
-                while(analyzedFieldRightBack.getId()!=null && !analyzedFieldRightBack.getId().contains("black") && !analyzedFieldRightBack.getId().contains("bqueen")){
-                    if (analyzedFieldRightBack.getId().contains("free")){
-                        analyzedFieldRightBack= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack)+1,GridPane.getColumnIndex(analyzedFieldRightBack)+1,gridPaneLoaded);
-                    }else if (analyzedFieldRightBack.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack)+1,GridPane.getColumnIndex(analyzedFieldRightBack)+1,gridPaneLoaded).getId().contains("free")){
-                        blackQueenAnalyzedKills=blackQueenAnalyzedKills+1;
-                        analyzedFieldRightBack= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack)+2,GridPane.getColumnIndex(analyzedFieldRightBack)+2,gridPaneLoaded);
-                    }else {
-                        break;
+                try {
+                    while (analyzedFieldRightBack.getId() != null && !analyzedFieldRightBack.getId().contains("black") && !analyzedFieldRightBack.getId().contains("bqueen")) {
+                        if (analyzedFieldRightBack.getId().contains("free")) {
+                            analyzedFieldRightBack = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack) + 1, GridPane.getColumnIndex(analyzedFieldRightBack) + 1, gridPaneLoaded);
+                        } else if (analyzedFieldRightBack.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack) + 1, GridPane.getColumnIndex(analyzedFieldRightBack) + 1, gridPaneLoaded).getId().contains("free")) {
+                            blackQueenAnalyzedKills = blackQueenAnalyzedKills + 1;
+                            analyzedFieldRightBack = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack) + 2, GridPane.getColumnIndex(analyzedFieldRightBack) + 2, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
                     }
+
+                }catch (Exception e2){
+                    System.out.println("Null dama right back!");
                 }
-                if (blackQueenAnalyzedKills>blackQueenKills){
-                    blackQueenKills=blackQueenAnalyzedKills;
-                    directoinAnalyzedQueen="rb";
+                if (blackQueenAnalyzedKills > blackQueenKills) {
+                    blackQueenKills = blackQueenAnalyzedKills;
+                    directoinAnalyzedQueen = "rb";
                 }
-                while(analyzedFieldLeftFront.getId()!=null && !analyzedFieldLeftFront.getId().contains("black") && !analyzedFieldLeftFront.getId().contains("bqueen")){
-                    if (analyzedFieldLeftFront.getId().contains("free")){
-                        analyzedFieldLeftFront= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront)-1,GridPane.getColumnIndex(analyzedFieldLeftFront)-1,gridPaneLoaded);
-                    }else if (analyzedFieldLeftFront.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront)-1,GridPane.getColumnIndex(analyzedFieldLeftFront)-1,gridPaneLoaded).getId().contains("free")){
-                        blackQueenAnalyzedKills=blackQueenAnalyzedKills+1;
-                        analyzedFieldLeftFront= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront)-2,GridPane.getColumnIndex(analyzedFieldLeftFront)-2,gridPaneLoaded);
-                    }else {
-                        break;
+                try {
+                    while (analyzedFieldLeftFront.getId() != null && !analyzedFieldLeftFront.getId().contains("black") && !analyzedFieldLeftFront.getId().contains("bqueen")) {
+                        if (analyzedFieldLeftFront.getId().contains("free")) {
+                            System.out.println("Left front free dama!");
+                            analyzedFieldLeftFront = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront) - 1, GridPane.getColumnIndex(analyzedFieldLeftFront) - 1, gridPaneLoaded);
+                        } else if (analyzedFieldLeftFront.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront) - 1, GridPane.getColumnIndex(analyzedFieldLeftFront) - 1, gridPaneLoaded).getId().contains("free")) {
+                            System.out.println("Left front jest bicie dama!");
+                            blackQueenAnalyzedKills = blackQueenAnalyzedKills + 1;
+                            analyzedFieldLeftFront = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront) - 2, GridPane.getColumnIndex(analyzedFieldLeftFront) - 2, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
                     }
+
+                }catch (Exception e3){
+                    System.out.println("Null dama left front!");
                 }
-                if (blackQueenAnalyzedKills>blackQueenKills){
-                    blackQueenKills=blackQueenAnalyzedKills;
-                    directoinAnalyzedQueen="lf";
+                if (blackQueenAnalyzedKills > blackQueenKills) {
+                    blackQueenKills = blackQueenAnalyzedKills;
+                    System.out.println("Left front kierunek : lf !");
+                    directoinAnalyzedQueen = "lf";
                 }
-                while(analyzedFieldRightFront.getId()!=null && !analyzedFieldRightFront.getId().contains("black") && !analyzedFieldRightFront.getId().contains("bqueen")){
-                    if (analyzedFieldRightFront.getId().contains("free")){
-                        analyzedFieldRightFront= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront)-1,GridPane.getColumnIndex(analyzedFieldRightFront)+1,gridPaneLoaded);
-                    }else if (analyzedFieldRightFront.getId().contains("w")
-                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront)-1,GridPane.getColumnIndex(analyzedFieldRightFront)+1,gridPaneLoaded).getId().contains("free")){
-                        blackQueenAnalyzedKills=blackQueenAnalyzedKills+1;
-                        analyzedFieldRightFront= getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront)-2,GridPane.getColumnIndex(analyzedFieldRightFront)+2,gridPaneLoaded);
-                    }else {
-                        break;
+                try {
+                    while (analyzedFieldRightFront.getId() != null && !analyzedFieldRightFront.getId().contains("black") && !analyzedFieldRightFront.getId().contains("bqueen")) {
+                        if (analyzedFieldRightFront.getId().contains("free")) {
+                            System.out.println("Right front free dama!");
+                            analyzedFieldRightFront = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront) - 1, GridPane.getColumnIndex(analyzedFieldRightFront) + 1, gridPaneLoaded);
+                        } else if (analyzedFieldRightFront.getId().contains("w")
+                                && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront) - 1, GridPane.getColumnIndex(analyzedFieldRightFront) + 1, gridPaneLoaded).getId().contains("free")) {
+                            System.out.println("Right front jest bicie dama!");
+                            blackQueenAnalyzedKills = blackQueenAnalyzedKills + 1;
+                            analyzedFieldRightFront = getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront) - 2, GridPane.getColumnIndex(analyzedFieldRightFront) + 2, gridPaneLoaded);
+                        } else {
+                            break;
+                        }
+
                     }
+
+                }catch (Exception e4){
+                    System.out.println("Null dama right front!");
                 }
-                if (blackQueenAnalyzedKills>blackQueenKills){
-                    blackQueenKills=blackQueenAnalyzedKills;
-                    directoinAnalyzedQueen="rf";
+                if (blackQueenAnalyzedKills > blackQueenKills) {
+                    blackQueenKills = blackQueenAnalyzedKills;
+                    System.out.println("Right front kierunek : rf !");
+                    directoinAnalyzedQueen = "rf";
                 }
-                if(blackQueenKills >= blackQueenHighestKills){
+                if(blackQueenKills > blackQueenHighestKills){
                     blackQueenHighestKills = blackQueenKills;
                     blackQueenWithHighestKills=blackQueenAnalyzed;
                     choosenQueenWithHighestKills.setQueen(blackQueenWithHighestKills);
@@ -1086,6 +1117,7 @@ public class gameController {
                 }
             }
         }
+        System.out.println("Wybrano dame : " + choosenQueenWithHighestKills.getQueen() + "| Kierunek : " + choosenQueenWithHighestKills.getDirectionToKill());
         return choosenQueenWithHighestKills;
     }
     public void randomMoveorKillQueen(GridPane gridPaneLoaded){
@@ -1106,31 +1138,175 @@ public class gameController {
         analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
         Random randomDirection = new Random();
         int direciton;
+        List<Integer> possibleDirections = new ArrayList<>();
 
         if (queen.getDirectionToKill().equals("brak")){
-            direciton=randomDirection.nextInt(4);
-            if (direciton == 0){
-                while (analyzedFieldLeftBack.getId().contains("free")||analyzedFieldLeftBack.getId().contains("b")){
-                    if (analyzedFieldLeftBack.getId().contains("b")
-                            || getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+1,GridPane.getColumnIndex(analyzedFieldLeftBack)-1, gridPaneLoaded).getId().contains("w")){
+            if (analyzedFieldLeftBack.getId().contains("free")){
+                possibleDirections.add(0);
+            }
+            if (analyzedFieldRightBack.getId().contains("free")){
+                possibleDirections.add(1);
+            }
+            if (analyzedFieldLeftFront.getId().contains("free")){
+                possibleDirections.add(2);
+            }
+            if (analyzedFieldRightFront.getId().contains("free")){
+                possibleDirections.add(3);
+            }
+            if (possibleDirections.size()>1) {
+                direciton = possibleDirections.get(randomDirection.nextInt(possibleDirections.size()));
+            }else {
+                direciton=possibleDirections.get(0);
+            }
+
+            if (direciton == 0) {
+                while (analyzedFieldLeftBack.getId().contains("free")) {
+                    if (!analyzedFieldLeftBack.getId().contains("free")){
                         break;
-                    }else {
+                    }
+                    newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
+                    newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
+                    GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                    analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+                }
+            }
+            if (direciton == 1) {
+                while (analyzedFieldRightBack.getId().contains("free")) {
+                    if (!analyzedFieldRightBack.getId().contains("free")){
+                        break;
+                    }
+                    newColumn = GridPane.getColumnIndex(analyzedFieldRightBack);
+                    newRow = GridPane.getRowIndex(analyzedFieldRightBack);
+                    GridPane.setConstraints(analyzedFieldRightBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                    analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+                }
+            }
+            if (direciton == 2) {
+                while (analyzedFieldLeftFront.getId().contains("free")) {
+                    if (!analyzedFieldLeftFront.getId().contains("free")){
+                        break;
+                    }
+                    newColumn = GridPane.getColumnIndex(analyzedFieldLeftFront);
+                    newRow = GridPane.getRowIndex(analyzedFieldLeftFront);
+                    GridPane.setConstraints(analyzedFieldLeftFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                    analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
+                }
+            }
+            if (direciton == 3) {
+                while (analyzedFieldRightFront.getId().contains("free")) {
+                    if (!analyzedFieldRightFront.getId().contains("free")){
+                        break;
+                    }
+                    newColumn = GridPane.getColumnIndex(analyzedFieldRightFront);
+                    newRow = GridPane.getRowIndex(analyzedFieldRightFront);
+                    GridPane.setConstraints(analyzedFieldRightFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                    GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                    blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                    blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                    analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+                }
+            }
+
+        }else{
+            if (queen.getDirectionToKill().equals("lb")){
+                while (analyzedFieldLeftBack.getId().contains("free")||analyzedFieldLeftBack.getId().contains("w")){
+                    if (analyzedFieldLeftBack.getId().contains("free")){
                         newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
                         newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
                         GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
                         GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+                    }else if (analyzedFieldLeftBack.getId().contains("w")
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftBack)+1,GridPane.getColumnIndex(analyzedFieldLeftBack)-1,gridPaneLoaded).getId().contains("free")){
+                        killingBackLeft(queen.getQueen());
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldLeftBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow + 1, blackQueenAnalyzedColumn - 1, gridPaneLoaded);
+                    }else {
+                        break;
                     }
                 }
             }
+            if (queen.getDirectionToKill().equals("rb")){
+                while (analyzedFieldRightBack.getId().contains("free")||analyzedFieldRightBack.getId().contains("w")){
+                    if (analyzedFieldRightBack.getId().contains("free")){
+                        newColumn = GridPane.getColumnIndex(analyzedFieldRightBack);
+                        newRow = GridPane.getRowIndex(analyzedFieldRightBack);
+                        GridPane.setConstraints(analyzedFieldRightBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                        GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+                    }else if (analyzedFieldRightBack.getId().contains("w")
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightBack)+1,GridPane.getColumnIndex(analyzedFieldRightBack)+1,gridPaneLoaded).getId().contains("free")){
+                        killingBackRight(queen.getQueen());
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldRightBack = getNodeByRowColumnIndex(blackQueenAnalyzedRow+1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+                    }else {
+                        break;
+                    }
+                }
+            }
+            if (queen.getDirectionToKill().equals("lf")){
+                while (analyzedFieldLeftFront.getId().contains("free")||analyzedFieldLeftFront.getId().contains("w")){
+                    if (analyzedFieldLeftFront.getId().contains("free")){
+                        newColumn = GridPane.getColumnIndex(analyzedFieldLeftFront);
+                        newRow = GridPane.getRowIndex(analyzedFieldLeftFront);
+                        GridPane.setConstraints(analyzedFieldLeftFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                        GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
 
+                    }else if (analyzedFieldLeftFront.getId().contains("w")
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldLeftFront)-1,GridPane.getColumnIndex(analyzedFieldLeftFront)-1,gridPaneLoaded).getId().contains("free")){
+                        killingFrontLeft(queen.getQueen());
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldLeftFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn-1,gridPaneLoaded);
+                    }else {
+                        break;
+                    }
+                }
+            }
+            if (queen.getDirectionToKill().equals("rf")){
+                while (analyzedFieldRightFront.getId().contains("free")||analyzedFieldRightFront.getId().contains("w")){
+                    if (analyzedFieldRightFront.getId().contains("free")){
+                        newColumn = GridPane.getColumnIndex(analyzedFieldRightFront);
+                        newRow = GridPane.getRowIndex(analyzedFieldRightFront);
+                        GridPane.setConstraints(analyzedFieldRightFront, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
+                        GridPane.setConstraints(queen.getQueen(), newColumn, newRow);
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+
+                    }else if (analyzedFieldRightFront.getId().contains("w")
+                            && getNodeByRowColumnIndex(GridPane.getRowIndex(analyzedFieldRightFront)-1,GridPane.getColumnIndex(analyzedFieldRightFront)+1,gridPaneLoaded).getId().contains("free")){
+                        killingFrontRight(queen.getQueen());
+                        blackQueenAnalyzedRow = GridPane.getRowIndex(queen.getQueen());
+                        blackQueenAnalyzedColumn = GridPane.getColumnIndex(queen.getQueen());
+                        analyzedFieldRightFront = getNodeByRowColumnIndex(blackQueenAnalyzedRow-1,blackQueenAnalyzedColumn+1,gridPaneLoaded);
+
+                    }else {
+                        break;
+                    }
+                }
+            }
         }
 
     }
-
-
-
-
-
 
 
 }

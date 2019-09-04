@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game/gameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game/gameController.java" afterDir="false" />
     </list>
@@ -66,8 +67,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Game/gameController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-42">
-              <caret line="1086" column="13" lean-forward="true" selection-start-line="1086" selection-start-column="13" selection-end-line="1086" selection-end-column="13" />
+            <state relative-caret-position="1928">
+              <caret line="1205" column="25" selection-start-line="1205" selection-start-column="25" selection-end-line="1205" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -214,9 +215,9 @@
     </option>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="468" />
-    <option name="y" value="-16" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="461" />
+    <option name="y" value="-13" />
     <option name="width" value="683" />
     <option name="height" value="728" />
   </component>
@@ -387,12 +388,14 @@
       <workItem from="1567190948890" duration="10103000" />
       <workItem from="1567323049717" duration="18759000" />
       <workItem from="1567443784050" duration="9179000" />
-      <workItem from="1567535275905" duration="3438000" />
+      <workItem from="1567535275905" duration="4125000" />
+      <workItem from="1567618336176" duration="357000" />
+      <workItem from="1567618728521" duration="9126000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="164207000" />
+    <option name="totallyTimeSpent" value="174377000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -405,18 +408,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.18003026" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.022692889" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
       <window_info id="Image Layers" order="4" />
       <window_info id="Capture Tool" order="5" />
       <window_info id="UI Designer" order="6" />
+      <window_info anchor="bottom" id="Duplicates" weight="0.32993197" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32993197" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3282313" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3282313" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39965987" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -430,7 +433,7 @@
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32993197" />
       <window_info anchor="bottom" id="Docker" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="15" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="16" visible="true" weight="0.32993197" />
+      <window_info anchor="bottom" id="Terminal" order="16" weight="0.14115646" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -511,8 +514,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Game/gameController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-42">
-          <caret line="1086" column="13" lean-forward="true" selection-start-line="1086" selection-start-column="13" selection-end-line="1086" selection-end-column="13" />
+        <state relative-caret-position="1928">
+          <caret line="1205" column="25" selection-start-line="1205" selection-start-column="25" selection-end-line="1205" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
