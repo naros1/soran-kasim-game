@@ -2,15 +2,18 @@ package Game;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
+import java.io.IOException;
 import java.util.*;
 
-public class gameController {
+public class GameController {
 
     @FXML
     private ImageView black1;
@@ -261,7 +264,9 @@ public class gameController {
     private boolean isKillBackRight;
     private boolean isKillBackLeft;
     private boolean noBlackQueen;
-    private List<Node> blacks = new ArrayList<>();
+    private List<Node> blacksPawns = new ArrayList<>();
+    private List<Node> anyBlacks = new ArrayList<>();
+    private MainController mainController;
 
 
 
@@ -398,11 +403,28 @@ public class gameController {
             }
 
         if (playerRoundCounter.getCountedObjects().equals(previousRoundNumber+1)) {
-            blacks.clear();
+            anyBlacks.clear();
+            List<Node> anyObjects = gridPane.getChildren();
+            anyObjects.stream()
+                    .filter(s -> s.getId().contains("b"))
+                    .forEach(anyBlacks::add);
+            if (anyBlacks.size()==0){
+                FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/resources/fxml/game/gameEnd.fxml"));
+                Pane pane = null;
+                try {
+                    pane = loader.load();
+                } catch (IOException e8) {
+                    e8.printStackTrace();
+                }
+                FinishGameController finishGameController = loader.getController();
+                finishGameController.setMainController(mainController);
+                mainController.setScreen(pane);
+            }
+            blacksPawns.clear();
             List<Node> allObjects = gridPane.getChildren();
             allObjects.stream()
                     .filter(s -> s.getId().contains("black"))
-                    .forEach(blacks::add);
+                    .forEach(blacksPawns::add);
             if (playerRoundCounter.getCountedObjects().equals(previousRoundNumber+1)
                     && playerRoundCounter.getCountedObjects() % 2 == 1
                     && blackQueens.getCountedObjects() > 0) {
@@ -413,14 +435,14 @@ public class gameController {
                 noBlackQueen = true;
             }
             if (playerRoundCounter.getCountedObjects().equals(previousRoundNumber+1)
-                    && blacks.size()==0) {
+                    && blacksPawns.size()==0) {
                 randomMoveOrKillQueen(gridPane);
                 previousRoundNumber = playerRoundCounter.getCountedObjects();
                 noBlackQueen = false;
             } else {
                 noBlackQueen = true;
             }
-            if (noBlackQueen&&blacks.size()!=0) {
+            if (noBlackQueen&& blacksPawns.size()!=0) {
                 try {
                     pickedBlack = chooseRandomBlackKilling(gridPane);
                     if (pickedBlack != null) {
@@ -1372,6 +1394,9 @@ public class gameController {
             }
         }
 
+    }
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 
 
