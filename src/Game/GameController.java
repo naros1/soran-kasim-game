@@ -10,7 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 public class GameController {
@@ -1398,6 +1401,26 @@ public class GameController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
+    public void save() throws Exception {
+        File savedGame = new File("previousGame.list");
+        List<ObjectsToSave> savedObjects = new ArrayList<>();
+        List<Node> allObjects = gridPane.getChildren();
+        allObjects.stream()
+                .map(s-> new ObjectsToSave(GridPane.getRowIndex(s),GridPane.getColumnIndex(s),s))
+                .forEach(savedObjects::add);
+
+        //try {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savedGame));
+            oos.writeObject(savedObjects.stream());
+            oos.close();
+        //} catch (Exception e) {
+            System.out.println("Nie udało się zapisać");
+
+        //}
+    }
+
+
 
 
 }
