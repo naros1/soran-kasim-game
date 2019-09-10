@@ -10,10 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class GameController {
@@ -1403,19 +1403,40 @@ public class GameController {
     }
 
     public void save() throws Exception {
-        File savedGame = new File("previousGame.list");
+        File savedGame = new File("previousGame.txt.txt");
         List<ObjectsToSave> savedObjects = new ArrayList<>();
         List<Node> allObjects = gridPane.getChildren();
         allObjects.stream()
                 .map(s-> new ObjectsToSave(GridPane.getRowIndex(s),GridPane.getColumnIndex(s),s))
                 .forEach(savedObjects::add);
+        for (ObjectsToSave objects : savedObjects
+                ) {
+            System.out.println(objects.getChild() +" | Column : "+objects.getColumn()+" | Row :  "+ objects.getRow());
+
+        }
+        Path path = Paths.get("C:\\Users\\Soran\\Documents\\Development\\KursJavaFx-master\\GameKodilla\\src\\resources\\fxml\\game\\previousGame.txt");
+        try (BufferedWriter writer = Files.newBufferedWriter(path))
+        {
+            for (ObjectsToSave textToSave: savedObjects
+            ) {
+                writer.write(textToSave.getChild().getId()+"\n");
+                writer.write(Integer.toString(textToSave.getRow())+"\n");
+                writer.write(Integer.toString(textToSave.getColumn())+"\n");
+
+            }
+            System.out.println("Udało się zapisać!");
+
+        } catch (IOException e) {
+            System.out.println("wystąpił błąd: " + e);
+        }
+
 
         //try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savedGame));
-            oos.writeObject(savedObjects.stream());
-            oos.close();
+            //ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savedGame));
+
+            //oos.close();
         //} catch (Exception e) {
-            System.out.println("Nie udało się zapisać");
+            //System.out.println("Nie udało się zapisać");
 
         //}
     }

@@ -40,7 +40,7 @@ public class MenuController {
         mainController.setScreen(pane);
 
             try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("previousGame.list"));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("previousGame.txt.list"));
                 Object readMap = ois.readObject();
                 if(readMap instanceof GridPane) {
                     gameController.setGridPane((GridPane) readMap);
