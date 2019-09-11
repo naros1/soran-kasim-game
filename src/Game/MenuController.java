@@ -8,6 +8,12 @@ import javafx.scene.layout.Pane;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MenuController {
     private MainController mainController;
@@ -39,16 +45,20 @@ public class MenuController {
         gameController.setMainController(mainController);
         mainController.setScreen(pane);
 
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("previousGame.txt.list"));
-                Object readMap = ois.readObject();
-                if(readMap instanceof GridPane) {
-                    gameController.setGridPane((GridPane) readMap);
-                }
-                ois.close();
-            } catch (Exception e) {
-                System.out.println("Nie udało się wczytać");
-            }
+        Path file = Paths.get("C:\\Users\\Soran\\Documents\\Development\\KursJavaFx-master\\GameKodilla\\src\\resources\\fxml\\game\\previousGame.txt");
+
+        try (Stream<String> stream = Files.lines(file)) {
+
+            stream.forEach(gameController::setPreviousGame);
+            List<String> freeList =  Files.lines(file)
+                    .map(s->s.substring(4))
+                    .filter(s->s.contains("free"))
+                    .collect(Collectors.toList());
+            gameController.assignFreePlacesCount(freeList);
+
+        } catch (IOException e) {
+            System.out.println("wystąpił błąd: " + e);
+        }
 
     }
     @FXML

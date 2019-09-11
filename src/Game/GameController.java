@@ -1,20 +1,26 @@
 package Game;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import sun.invoke.empty.Empty;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.List;
 
 public class GameController {
 
@@ -116,6 +122,10 @@ public class GameController {
 
     @FXML
     private GridPane gridPane;
+
+    @FXML
+    private Label label;
+
 
 
     public void setBlack1(ImageView black1) {
@@ -270,6 +280,7 @@ public class GameController {
     private List<Node> blacksPawns = new ArrayList<>();
     private List<Node> anyBlacks = new ArrayList<>();
     private MainController mainController;
+    private StringProperty propertyTextField = new SimpleStringProperty(this, "textPropert", "Nowa Gra!");
 
 
 
@@ -277,9 +288,7 @@ public class GameController {
 
     @FXML
     public void initialize(){
-
-
-
+        label.textProperty().bind(propertyTextField);
 
 
 
@@ -502,6 +511,7 @@ public class GameController {
             System.out.println("Nie mozesz sie ruszyc!");
         }
         System.out.println("round : " + playerRoundCounter.getCountedObjects() + "| round poprzednia : " + previousRoundNumber);
+        winningOrLoseingStatus();
 
 
     }
@@ -1403,7 +1413,6 @@ public class GameController {
     }
 
     public void save() throws Exception {
-        File savedGame = new File("previousGame.txt.txt");
         List<ObjectsToSave> savedObjects = new ArrayList<>();
         List<Node> allObjects = gridPane.getChildren();
         allObjects.stream()
@@ -1419,9 +1428,8 @@ public class GameController {
         {
             for (ObjectsToSave textToSave: savedObjects
             ) {
-                writer.write(textToSave.getChild().getId()+"\n");
-                writer.write(Integer.toString(textToSave.getRow())+"\n");
-                writer.write(Integer.toString(textToSave.getColumn())+"\n");
+                writer.write(Integer.toString(textToSave.getRow())+"|"+Integer.toString(textToSave.getColumn())+"|"+textToSave.getChild().getId()+"\n");
+
 
             }
             System.out.println("Udało się zapisać!");
@@ -1439,6 +1447,66 @@ public class GameController {
             //System.out.println("Nie udało się zapisać");
 
         //}
+    }
+    public void setPreviousGame(String textLine){
+        int row = Integer.parseInt(textLine.substring(0,1));
+        int column = Integer.parseInt(textLine.substring(2,3));
+        String id = textLine.substring(4);
+
+        ImageView pickedToChange = (ImageView) getNodeByRowColumnIndex(row,column,gridPane);
+        if (id.contains("wqueen")) {
+            Image whiteQueen = new Image("resources/fxml/game/biala_dama.png");
+            pickedToChange.setImage(whiteQueen);
+            pickedToChange.setId(id);
+        }
+        if (id.contains("bqueen")) {
+            Image blackQueen = new Image("resources/fxml/game/czarna_dama.png");
+            pickedToChange.setImage(blackQueen);
+            pickedToChange.setId(id);
+        }
+        if (id.contains("white")) {
+            Image white = new Image("resources/fxml/game/bialy_pionek.png");
+            pickedToChange.setImage(white);
+            pickedToChange.setId(id);
+        }
+        if (id.contains("black")) {
+            Image black = new Image("resources/fxml/game/czarny_pionek.png");
+            pickedToChange.setImage(black);
+            pickedToChange.setId(id);
+        }
+        if (id.contains("free")) {
+            Image free = new Image("resources/fxml/game/free.png");
+            pickedToChange.setImage(free);
+            pickedToChange.setId(id);
+        }
+    }
+    public void assignFreePlacesCount(List freeList){
+        freePlaces.setCountedObjects(freeList.size());
+        System.out.println("Liczba wolnych pol : " + freePlaces.getCountedObjects());
+    }
+    public void winningOrLoseingStatus(){
+        List<String>blacks = new ArrayList<>();
+        List<String>whites = new ArrayList<>();
+        gridPane.getChildren().stream()
+                .map(s->s.getId())
+                .filter(s->s.contains("b"))
+                .forEach(blacks::add);
+        gridPane.getChildren().stream()
+                .map(s->s.getId())
+                .filter(s->s.contains("w"))
+                .forEach(whites::add);
+        if(blacks.size()>whites.size()){
+            propertyTextField.setValue("Przegrywasz !");
+
+        }
+        if(blacks.size()<whites.size()){
+            propertyTextField.setValue("Wygrywasz !");
+
+        }
+        if(blacks.size()==whites.size()){
+            propertyTextField.setValue("Remis !");
+
+        }
     }
 
 
