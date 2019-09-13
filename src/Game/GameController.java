@@ -12,9 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import sun.invoke.empty.Empty;
 
-import java.awt.*;
+
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -24,101 +24,6 @@ import java.util.List;
 
 public class GameController {
 
-    @FXML
-    private ImageView black1;
-
-    @FXML
-    private ImageView black2;
-
-    @FXML
-    private ImageView black3;
-
-    @FXML
-    private ImageView black4;
-
-    @FXML
-    private ImageView black5;
-
-    @FXML
-    private ImageView black6;
-
-    @FXML
-    private ImageView black7;
-
-    @FXML
-    private ImageView black8;
-
-    @FXML
-    private ImageView black9;
-
-    @FXML
-    private ImageView black10;
-
-    @FXML
-    private ImageView black11;
-
-    @FXML
-    private ImageView black12;
-
-    @FXML
-    private ImageView white1;
-
-    @FXML
-    private ImageView white2;
-
-    @FXML
-    private ImageView white3;
-
-    @FXML
-    private ImageView white4;
-
-    @FXML
-    private ImageView white5;
-
-    @FXML
-    private ImageView white6;
-
-    @FXML
-    private ImageView white7;
-
-    @FXML
-    private ImageView white8;
-
-    @FXML
-    private ImageView white9;
-
-    @FXML
-    private ImageView white10;
-
-    @FXML
-    private ImageView white11;
-
-    @FXML
-    private ImageView white12;
-
-    @FXML
-    private ImageView free1;
-
-    @FXML
-    private ImageView free2;
-
-    @FXML
-    private ImageView free3;
-
-    @FXML
-    private ImageView free4;
-
-    @FXML
-    private ImageView free5;
-
-    @FXML
-    private ImageView free6;
-
-    @FXML
-    private ImageView free7;
-
-    @FXML
-    private ImageView free8;
 
     @FXML
     private GridPane gridPane;
@@ -127,138 +32,6 @@ public class GameController {
     private Label label;
 
 
-
-    public void setBlack1(ImageView black1) {
-        this.black1 = black1;
-    }
-
-    public void setBlack2(ImageView black2) {
-        this.black2 = black2;
-    }
-
-    public void setBlack3(ImageView black3) {
-        this.black3 = black3;
-    }
-
-    public void setBlack4(ImageView black4) {
-        this.black4 = black4;
-    }
-
-    public void setBlack5(ImageView black5) {
-        this.black5 = black5;
-    }
-
-    public void setBlack6(ImageView black6) {
-        this.black6 = black6;
-    }
-
-    public void setBlack7(ImageView black7) {
-        this.black7 = black7;
-    }
-
-    public void setBlack8(ImageView black8) {
-        this.black8 = black8;
-    }
-
-    public void setBlack9(ImageView black9) {
-        this.black9 = black9;
-    }
-
-    public void setBlack10(ImageView black10) {
-        this.black10 = black10;
-    }
-
-    public void setBlack11(ImageView black11) {
-        this.black11 = black11;
-    }
-
-    public void setBlack12(ImageView black12) {
-        this.black12 = black12;
-    }
-
-    public void setWhite1(ImageView white1) {
-        this.white1 = white1;
-    }
-
-    public void setWhite2(ImageView white2) {
-        this.white2 = white2;
-    }
-
-    public void setWhite3(ImageView white3) {
-        this.white3 = white3;
-    }
-
-    public void setWhite4(ImageView white4) {
-        this.white4 = white4;
-    }
-
-    public void setWhite5(ImageView white5) {
-        this.white5 = white5;
-    }
-
-    public void setWhite6(ImageView white6) {
-        this.white6 = white6;
-    }
-
-    public void setWhite7(ImageView white7) {
-        this.white7 = white7;
-    }
-
-    public void setWhite8(ImageView white8) {
-        this.white8 = white8;
-    }
-
-    public void setWhite9(ImageView white9) {
-        this.white9 = white9;
-    }
-
-    public void setWhite10(ImageView white10) {
-        this.white10 = white10;
-    }
-
-    public void setWhite11(ImageView white11) {
-        this.white11 = white11;
-    }
-
-    public void setWhite12(ImageView white12) {
-        this.white12 = white12;
-    }
-
-    public void setFree1(ImageView free1) {
-        this.free1 = free1;
-    }
-
-    public void setFree2(ImageView free2) {
-        this.free2 = free2;
-    }
-
-    public void setFree3(ImageView free3) {
-        this.free3 = free3;
-    }
-
-    public void setFree4(ImageView free4) {
-        this.free4 = free4;
-    }
-
-    public void setFree5(ImageView free5) {
-        this.free5 = free5;
-    }
-
-    public void setFree6(ImageView free6) {
-        this.free6 = free6;
-    }
-
-    public void setFree7(ImageView free7) {
-        this.free7 = free7;
-    }
-
-    public void setFree8(ImageView free8) {
-        this.free8 = free8;
-    }
-
-    public void setGridPane(GridPane gridPane) {
-        this.gridPane = gridPane;
-    }
 
 
     private ImageView pickedId;
@@ -334,7 +107,7 @@ public class GameController {
 
                     }
                     try {
-                        if (pickedOld.getId().contains("white") && pickedId.getId().contains("b")) {
+                        if (pickedOld != null && pickedOld.getId().contains("white") && pickedId.getId().contains("b")) {
                             if (isKillFrontRight) {
                                 killingFrontRight(pickedOld);
                                 checkForKill("b");
@@ -385,7 +158,7 @@ public class GameController {
                         System.out.println("wykonałeś ruch!");
                     }
                     try {
-                        if (pickedOld.getId().contains("wqueen")) {
+                        if (pickedOld != null && pickedOld.getId().contains("wqueen")) {
                             moveOrKillWhiteQueen(pickedOld, pickedId);
                             playerRoundCounter.setCountedObjects(previousRoundNumber + 1);
                             pickedId = null;
@@ -515,7 +288,7 @@ public class GameController {
 
 
     }
-    public Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
+    private Node getNodeByRowColumnIndex(final int row, final int column, GridPane gridPane) {
         Node result = null;
         ObservableList<Node> childrens = gridPane.getChildren();
 
@@ -529,7 +302,7 @@ public class GameController {
         return result;
     }
 
-    public Node chooseRandomBlackToMove(GridPane gridPaneLoaded) {
+    private Node chooseRandomBlackToMove(GridPane gridPaneLoaded) {
         Node result;
         List<Node> allObjects = gridPaneLoaded.getChildren();
         List<Node> blacks = new ArrayList<>();
@@ -549,7 +322,7 @@ public class GameController {
         return result;
     }
 
-    public Node chooseRandomBlackKilling(GridPane gridPaneLoaded) {
+    private Node chooseRandomBlackKilling(GridPane gridPaneLoaded) {
         Node result;
         List<Node> allObjects = gridPaneLoaded.getChildren();
         List<Node> blacksHavingKill = new ArrayList<>();
@@ -570,7 +343,7 @@ public class GameController {
         return result;
     }
 
-    public void moveBlack(GridPane gridPaneLoaded){
+    private void moveBlack(GridPane gridPaneLoaded){
         Node chosenBlack;
         int column;
         int row;
@@ -633,7 +406,7 @@ public class GameController {
 
     }
 
-    public ImageView addCountersAndFreePlacesAfterBlackKill(){
+    private ImageView addCountersAndFreePlacesAfterBlackKill(){
         freePlaces.setCountedObjects(freePlaces.getCountedObjects()+1);
         killedBlack.setCountedObjects(killedBlack.getCountedObjects()+1);
         ImageView imageView = new ImageView();
@@ -647,7 +420,7 @@ public class GameController {
     }
 
 
-    public void autoMultipleKill(String colorKilling, String colorToKill, Node picked) {
+    private void autoMultipleKill(String colorKilling, String colorToKill, Node picked) {
         boolean condition1 ;
         boolean condition2 ;
         boolean condition3 ;
@@ -758,7 +531,7 @@ public class GameController {
                     }
                     System.out.println("pętla 4 !!!");
                 }
-                if (picked.equals("white")) {
+                if (picked.getId().contains("white")) {
                     checkForKill(colorToKill);
                     condition1 = isKillFrontRight;
                     condition2 = isKillFrontLeft;
@@ -779,7 +552,7 @@ public class GameController {
         }
     }
 
-    public void checkForKill(String color){
+    private void checkForKill(String color){
         try {
             isKillBackRight = (getNodeByRowColumnIndex(GridPane.getRowIndex(pickedOld) + 1, GridPane.getColumnIndex(pickedOld) + 1, gridPane).getId().contains(color)
                     && getNodeByRowColumnIndex(GridPane.getRowIndex(pickedOld) + 2, GridPane.getColumnIndex(pickedOld) + 2, gridPane).getId().contains("free"));
@@ -810,7 +583,7 @@ public class GameController {
 
     }
 
-    public String isBlackHaveKill(Node pickedBlack){
+    private String isBlackHaveKill(Node pickedBlack){
         String result;
         try {
             isKillBackRight = (getNodeByRowColumnIndex(GridPane.getRowIndex(pickedBlack) + 1, GridPane.getColumnIndex(pickedBlack) + 1, gridPane).getId().contains("w")
@@ -851,18 +624,18 @@ public class GameController {
 
     }
 
-    public void killBlack(Node picked){
+    private void killBlack(Node picked){
         checkForKill("b");
         autoMultipleKill("white", "b", picked);
 
     }
-    public void killWhite(Node picked) {
+    private void killWhite(Node picked) {
         isBlackHaveKill(picked);
         autoMultipleKill("black", "w", picked);
     }
 
 
-    public void killingFrontRight(Node picked){
+    private void killingFrontRight(Node picked){
         try {
             if (getNodeByRowColumnIndex(GridPane.getRowIndex(picked) - 2, GridPane.getColumnIndex(picked) + 2, gridPane)!=null) {
                 ImageView imageView = addCountersAndFreePlacesAfterBlackKill();
@@ -877,7 +650,7 @@ public class GameController {
         }
     }
 
-    public void killingFrontLeft(Node picked) {
+    private void killingFrontLeft(Node picked) {
         try {
             if (getNodeByRowColumnIndex(GridPane.getRowIndex(picked) - 2, GridPane.getColumnIndex(picked) - 2, gridPane)!=null) {
                 ImageView imageView = addCountersAndFreePlacesAfterBlackKill();
@@ -892,7 +665,7 @@ public class GameController {
         }
     }
 
-    public void killingBackRight(Node picked){
+    private void killingBackRight(Node picked){
         try {
             if (getNodeByRowColumnIndex(GridPane.getRowIndex(picked) + 2, GridPane.getColumnIndex(picked) + 2, gridPane)!=null) {
                 ImageView imageView = addCountersAndFreePlacesAfterBlackKill();
@@ -907,7 +680,7 @@ public class GameController {
         }
     }
 
-    public void killingBackLeft(Node picked){
+    private void killingBackLeft(Node picked){
         try {
             if (getNodeByRowColumnIndex(GridPane.getRowIndex(picked) + 2, GridPane.getColumnIndex(picked) - 2, gridPane)!=null) {
                 ImageView imageView = addCountersAndFreePlacesAfterBlackKill();
@@ -921,7 +694,7 @@ public class GameController {
             System.out.println("Nie da się bić w lewa tył");
         }
     }
-    public void changeToQueen(Node picked){
+    private void changeToQueen(Node picked){
         ImageView pickedToChange = (ImageView) picked;
         if (pickedToChange.getId().contains("white")){
             if (GridPane.getRowIndex(pickedToChange)==0){
@@ -940,7 +713,7 @@ public class GameController {
         }
     }
 
-    public void moveOrKillWhiteQueen(Node pickedQueen, Node pickedField) {
+    private void moveOrKillWhiteQueen(Node pickedQueen, Node pickedField) {
         int loops;
         int deltaRows;
         int deltaColumns;
@@ -1029,7 +802,7 @@ public class GameController {
 
         }
     }
-    public QueenWithHighestKills chooseRandomBlackQueen(GridPane gridPaneLoaded) {
+    private QueenWithHighestKills chooseRandomBlackQueen(GridPane gridPaneLoaded) {
 
         Node blackQueenAnalyzed;
         Node blackQueenWithHighestKills = null;
@@ -1175,7 +948,7 @@ public class GameController {
         System.out.println("Wybrano dame : " + choosenQueenWithHighestKills.getQueen() + "| Kierunek : " + choosenQueenWithHighestKills.getDirectionToKill());
         return choosenQueenWithHighestKills;
     }
-    public void randomMoveOrKillQueen(GridPane gridPaneLoaded){
+    private void randomMoveOrKillQueen(GridPane gridPaneLoaded){
         QueenWithHighestKills queen = chooseRandomBlackQueen(gridPaneLoaded);
         if (queen.getQueen()!=null) {
             Node analyzedFieldLeftFront;
@@ -1202,24 +975,28 @@ public class GameController {
                         possibleDirections.add(0);
                     }
                 } catch (Exception e1) {
+                    System.out.println("Error : " + e1);
                 }
                 try {
                     if (analyzedFieldRightBack.getId().contains("free")) {
                         possibleDirections.add(1);
                     }
                 } catch (Exception e2) {
+                    System.out.println("Error : " + e2);
                 }
                 try {
                     if (analyzedFieldLeftFront.getId().contains("free")) {
                         possibleDirections.add(2);
                     }
                 } catch (Exception e3) {
+                    System.out.println("Error : " + e3);
                 }
                 try {
                     if (analyzedFieldRightFront.getId().contains("free")) {
                         possibleDirections.add(3);
                     }
                 } catch (Exception e4) {
+                    System.out.println("Error : " + e4);
                 }
                 if (possibleDirections.size() > 1) {
                     direciton = possibleDirections.get(randomDirection.nextInt(possibleDirections.size()));
@@ -1233,6 +1010,7 @@ public class GameController {
                             if (!analyzedFieldLeftBack.getId().contains("free")) {
                                 break;
                             }
+
                             newColumn = GridPane.getColumnIndex(analyzedFieldLeftBack);
                             newRow = GridPane.getRowIndex(analyzedFieldLeftBack);
                             GridPane.setConstraints(analyzedFieldLeftBack, GridPane.getColumnIndex(queen.getQueen()), GridPane.getRowIndex(queen.getQueen()));
@@ -1408,11 +1186,11 @@ public class GameController {
         }
 
     }
-    public void setMainController(MainController mainController) {
+    void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
-    public void save() throws Exception {
+    public void save(){
         List<ObjectsToSave> savedObjects = new ArrayList<>();
         List<Node> allObjects = gridPane.getChildren();
         allObjects.stream()
@@ -1428,7 +1206,7 @@ public class GameController {
         {
             for (ObjectsToSave textToSave: savedObjects
             ) {
-                writer.write(Integer.toString(textToSave.getRow())+"|"+Integer.toString(textToSave.getColumn())+"|"+textToSave.getChild().getId()+"\n");
+                writer.write(textToSave.getRow() +"|"+ textToSave.getColumn() +"|"+textToSave.getChild().getId()+"\n");
 
 
             }
@@ -1437,18 +1215,9 @@ public class GameController {
         } catch (IOException e) {
             System.out.println("wystąpił błąd: " + e);
         }
-
-
-        //try {
-            //ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(savedGame));
-
-            //oos.close();
-        //} catch (Exception e) {
-            //System.out.println("Nie udało się zapisać");
-
-        //}
     }
-    public void setPreviousGame(String textLine){
+
+    void setPreviousGame(String textLine){
         int row = Integer.parseInt(textLine.substring(0,1));
         int column = Integer.parseInt(textLine.substring(2,3));
         String id = textLine.substring(4);
@@ -1480,19 +1249,19 @@ public class GameController {
             pickedToChange.setId(id);
         }
     }
-    public void assignFreePlacesCount(List freeList){
+    void assignFreePlacesCount(List freeList){
         freePlaces.setCountedObjects(freeList.size());
         System.out.println("Liczba wolnych pol : " + freePlaces.getCountedObjects());
     }
-    public void winningOrLoseingStatus(){
+    private void winningOrLoseingStatus(){
         List<String>blacks = new ArrayList<>();
         List<String>whites = new ArrayList<>();
         gridPane.getChildren().stream()
-                .map(s->s.getId())
+                .map(Node::getId)
                 .filter(s->s.contains("b"))
                 .forEach(blacks::add);
         gridPane.getChildren().stream()
-                .map(s->s.getId())
+                .map(Node::getId)
                 .filter(s->s.contains("w"))
                 .forEach(whites::add);
         if(blacks.size()>whites.size()){
@@ -1508,8 +1277,5 @@ public class GameController {
 
         }
     }
-
-
-
 
 }
